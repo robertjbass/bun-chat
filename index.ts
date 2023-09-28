@@ -37,10 +37,18 @@ class OpenAIClient {
   };
 
   public prompt = async () => {
-    this.createChatCompletion("Tell me about yourself");
+    process.stdout.write("User: ");
+    for await (const line of console) {
+      this.createChatCompletion(line);
+    }
+
+    await this.prompt();
   };
 }
 
-const client = new OpenAIClient(Bun.env.OPENAI_API_KEY as string);
+const client = new OpenAIClient(
+  Bun.env.OPENAI_API_KEY as string,
+  "You are a very funny assistand. You're helpful but super funny."
+);
 
-client.prompt();
+await client.prompt();

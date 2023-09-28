@@ -15,31 +15,41 @@ class OpenAIClient {
       role: "system",
       content: systemMessage || "You are a helpful assistant.",
     });
+
+    console.log("Start chatting with the assistant. Type exit to exit.");
   }
 
   private addCharsToStdout = async (chars: string) => {
     await Bun.write(Bun.stdout, chars);
   };
 
-  private createChatCompletion = async (prompt: string) => {
+  private createChatCompletion = async (prompt: string): Promise<string> => {
     const stream = await this.openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [...this.messages, { role: "user", content: prompt }],
       stream: true,
     });
 
+    let response = "";
     for await (const part of stream) {
       const token = part.choices[0]?.delta?.content || "";
+      response += token;
       await this.addCharsToStdout(token);
     }
 
-    this.addCharsToStdout("\n\n");
+    await this.addCharsToStdout("\n\n");
+    return response;
   };
 
   public prompt = async () => {
-    process.stdout.write("User: ");
+    process.stdout.write("> ");
     for await (const line of console) {
-      this.createChatCompletion(line);
+      if (line === "exit") process.exit(0);
+      const response = await this.createChatCompletion(line);
+      this.messages.push({ role: "user", content: line });
+      this.messages.push({ role: "assistant", content: response });
+
+      process.stdout.write("\n> ");
     }
 
     await this.prompt();

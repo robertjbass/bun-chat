@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import chalk from "chalk";
 
 type Message = {
   role: "system" | "user" | "assistant" | "function";
@@ -20,7 +21,7 @@ class OpenAIClient {
   }
 
   private addCharsToStdout = async (chars: string) => {
-    await Bun.write(Bun.stdout, chars);
+    await Bun.write(Bun.stdout, chalk.blue(chars));
   };
 
   private createChatCompletion = async (prompt: string): Promise<string> => {
@@ -37,7 +38,7 @@ class OpenAIClient {
       await this.addCharsToStdout(token);
     }
 
-    await this.addCharsToStdout("\n\n");
+    await this.addCharsToStdout("\n");
     return response;
   };
 

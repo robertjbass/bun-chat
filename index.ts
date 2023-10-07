@@ -1,3 +1,5 @@
+#!/usr/bin/env bun
+
 import { OpenAIClient } from "./openAiClient";
 import { setup } from "./setup";
 

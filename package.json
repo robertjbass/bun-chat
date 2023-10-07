@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "serve": "bun run --watch index.ts",
-    "build": "bun build ./index.ts --outfile=dist/index.js --target=bun"
+    "build": "bun build ./index.ts --outfile=ask.js --target=bun"
   },
   "devDependencies": {
     "bun-types": "latest"

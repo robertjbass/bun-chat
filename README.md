@@ -18,8 +18,7 @@ To install `Ask`, follow these simple steps:
 1. Clone this repository or download the source code.
 1. Navigate to the directory containing the `install.sh` script.
 1. Run the installation script with the command: `sh install.sh`
-1. Once the installation is complete, you can invoke ChatGPT in your terminal simply by typing:
-1. You can now run this by typing `ask` into your terminal
+1. Once the installation is complete, you can invoke ChatGPT in your terminal simply by typing: `ask`
 
 The `install.sh` script checks if the required dependencies are present, installs them if needed, and sets up the ask command for you.
 
